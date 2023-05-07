@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 
+set(CMAKE_CXX_STANDARD 20)
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+
 project(SB2 LANGUAGES CXX)
 
 # Dependencies
@@ -18,7 +21,6 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
 file(GLOB_RECURSE tests CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
 
 add_library(SB2Core STATIC ${headers} ${sources})
-set_target_properties(SB2Core PROPERTIES CXX_STANDARD 20)
 
 # Tests
 include(GoogleTest)

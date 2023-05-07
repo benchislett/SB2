@@ -4,42 +4,52 @@
 
 #include <gtest/gtest.h>
 
-TEST(BattleTests, Bounce) {
-  Character attacker(4, 5);
-  Character defender(3, 6);
+TEST(Fight1v1, Bounce) {
+  Player p1, p2;
+  p1.addCharacter(std::make_shared<Character>(4, 5));
+  p2.addCharacter(std::make_shared<Character>(3, 6));
 
-  battle(attacker, defender);
+  int res = fight(p1, p2);
 
-  ASSERT_FALSE(attacker.hasDied());
-  ASSERT_FALSE(defender.hasDied());
+  ASSERT_TRUE(res == FIGHT_DRAW);
+  ASSERT_EQ(p1.health, 40);
+  ASSERT_EQ(p2.health, 40);
 }
 
-TEST(BattleTests, AttackerDies) {
-  Character attacker(4, 2);
-  Character defender(3, 6);
+TEST(Fight1v1, AttackerDies) {
+  Player p1, p2;
+  p1.always_first = true;
+  p1.addCharacter(std::make_shared<Character>(4, 2));
+  p2.addCharacter(std::make_shared<Character>(3, 6));
 
-  battle(attacker, defender);
+  int res = fight(p1, p2);
 
-  ASSERT_TRUE(attacker.hasDied());
-  ASSERT_FALSE(defender.hasDied());
+  ASSERT_TRUE(res == FIGHT_WINNER1);
+  ASSERT_EQ(p1.health, 39);
+  ASSERT_EQ(p2.health, 40);
 }
 
-TEST(BattleTests, DefenderDies) {
-  Character attacker(4, 4);
-  Character defender(3, 1);
+TEST(Fight1v1, DefenderDies) {
+  Player p1, p2;
+  p1.always_first = true;
+  p1.addCharacter(std::make_shared<Character>(4, 4));
+  p2.addCharacter(std::make_shared<Character>(3, 1));
 
-  battle(attacker, defender);
+  int res = fight(p1, p2);
 
-  ASSERT_FALSE(attacker.hasDied());
-  ASSERT_TRUE(defender.hasDied());
+  ASSERT_TRUE(res == FIGHT_WINNER0);
+  ASSERT_EQ(p1.health, 40);
+  ASSERT_EQ(p2.health, 39);
 }
 
-TEST(BattleTests, BothDie) {
-  Character attacker(4, 4);
-  Character defender(4, 4);
+TEST(Fight1v1, BothDie) {
+  Player p1, p2;
+  p1.addCharacter(std::make_shared<Character>(4, 4));
+  p2.addCharacter(std::make_shared<Character>(4, 4));
 
-  battle(attacker, defender);
+  int res = fight(p1, p2);
 
-  ASSERT_TRUE(attacker.hasDied());
-  ASSERT_TRUE(defender.hasDied());
+  ASSERT_TRUE(res == FIGHT_DRAW);
+  ASSERT_EQ(p1.health, 40);
+  ASSERT_EQ(p2.health, 40);
 }

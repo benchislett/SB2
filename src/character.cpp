@@ -11,13 +11,16 @@ int Character::getHealth() const {
   return health;
 }
 
-bool Character::takeDamage(int damage) {
+void Character::takeDamage(int damage) {
   health = std::max(0, health - damage);
-  return hasDied();
 }
 
-bool Character::hasDied() const {
+bool Character::dead() const {
   assert(health >= 0);
 
   return health == 0;
+}
+
+bool Character::alive() const {
+  return !dead();
 }

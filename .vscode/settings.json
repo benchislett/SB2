@@ -83,6 +83,9 @@
     "__verbose_abort": "cpp",
     "ios": "cpp",
     "locale": "cpp",
-    "cassert": "cpp"
+    "cassert": "cpp",
+    "complex": "cpp",
+    "forward_list": "cpp",
+    "typeindex": "cpp"
   }
 }
