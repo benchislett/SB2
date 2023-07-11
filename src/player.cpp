@@ -6,6 +6,15 @@
 #include <algorithm>
 #include <cassert>
 
+int Player::getHealth() const {
+  return health;
+}
+
+void Player::setHealth(int hp) {
+  health = hp;
+}
+
+
 bool Player::alive() const {
   return health > 0;
 }
@@ -19,8 +28,10 @@ void Player::takeDamage(int amount) {
 }
 
 void Player::addCharacter(std::shared_ptr<Character> character) {
-  assert(characters[character->position] == nullptr);
-  characters[character->position] = character;
+  assert(character->position >= 1);
+  assert(character->position <= 7);
+  assert(characters[character->position - 1] == nullptr);
+  characters[character->position - 1] = character;
 }
 
 std::shared_ptr<Character> Player::nextCharacter(const CharacterFilter& filter) const {
@@ -67,7 +78,7 @@ std::shared_ptr<Character> Player::getDefender(bool flying) const {
 }
 
 void Player::kill(int position) {
-  assert(characters[position]->dead());
+  assert(characters[position - 1]->dead());
 
-  characters[position] = nullptr;
+  characters[position - 1] = nullptr;
 }

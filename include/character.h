@@ -1,17 +1,36 @@
 #pragma once
 
+#include <memory>
+
+struct Player;
+struct PlayerEffectManager;
+struct FightEffectManager;
+
 struct Character {
-  int attack, base_attack;
-  int health, base_health;
+  int attack;
+  int base_health, damage;
+
   int position;
 
-  Character(int atk, int hp, int pos = 1) : attack(atk), base_attack(atk), health(hp), base_health(hp), position(pos) {}
+  Character(int atk = 0, int hp = 1, int pos = 1) : attack(atk), base_health(hp), damage(0), position(pos) {}
+
+  // register effects on the player scope
+  virtual void playerInit(PlayerEffectManager& m) {}
+
+  // register effects on this fight scope
+  virtual void fightInit(FightEffectManager& m) {}
+
+  virtual ~Character() {}
 
   int getAttack() const;
-  int getHealth() const;
-  bool isUpgraded() const;
+  int getHealth() const; // active health, minus damage taken
+  int getBaseHealth() const;
+  void setAttack(int);
+  void setHealth(int);
 
-  void takeDamage(int dmg);
+  void takeDamage(int);
+
+  bool golden() const;
   bool dead() const;
   bool alive() const;
 };

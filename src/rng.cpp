@@ -1,5 +1,7 @@
 #include "rng.h"
 
+#include <random>
+
 int rand_in_range(int low, int high) {
   static std::mt19937 gen(std::random_device{}());
 

@@ -5,20 +5,26 @@
 #include <array>
 #include <functional>
 #include <memory>
+#include <string>
 
 typedef std::function<bool(std::shared_ptr<Character>)> CharacterFilter;
 
 struct Player {
   int health;
-  int battle_slot = 1;
+  int battle_slot = 1; // 1 to 7, inclusive
 
   bool always_first = false;
 
+  std::string id;
+
   std::array<std::shared_ptr<Character>, 7> characters;
 
-  Player(int hp = 40) : health(hp) {}
+  Player(int hp = 40, std::string name = "Player") : health(hp), id(name) {}
 
-  void takeDamage(int amount);
+  int getHealth() const;
+  void setHealth(int);
+
+  void takeDamage(int);
   bool dead() const;
   bool alive() const;
 

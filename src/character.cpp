@@ -3,22 +3,36 @@
 #include <algorithm>
 #include <cassert>
 
+void Character::setAttack(int atk) {
+  attack = atk;
+}
+
+void Character::setHealth(int hp) {
+  base_health = hp;
+}
+
 int Character::getAttack() const {
   return attack;
 }
 
-int Character::getHealth() const {
-  return health;
+int Character::getBaseHealth() const {
+  return base_health;
 }
 
-void Character::takeDamage(int damage) {
-  health = std::max(0, health - damage);
+int Character::getHealth() const {
+  return std::max(0, base_health - damage);
+}
+
+void Character::takeDamage(int dmg) {
+  damage += dmg;
+}
+
+bool Character::golden() const {
+  return false;
 }
 
 bool Character::dead() const {
-  assert(health >= 0);
-
-  return health == 0;
+  return getHealth() == 0;
 }
 
 bool Character::alive() const {
